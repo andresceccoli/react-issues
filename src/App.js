@@ -1,53 +1,78 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 import IssueList from './IssueList';
+import IssueFilter from './IssueFilter';
+import { listIssues } from './api';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import NewIssue from './NewIssue';
 
-function App() {
-  const issues = [
-    {
-      id: 1,
-      titulo: "Arreglar error al dar de alta",
-      contenido: "El error se da en el ABM de clientes",
-      estado: "open",
-      usuario: "aceccoli",
-      fecha: 1579263883,
-      modificado: null
-    },
-    {
-      id: 2,
-      titulo: "ABM Productos",
-      contenido: "Desarrollar el ABM de productos",
-      estado: "closed",
-      usuario: "aceccoli",
-      fecha: 1579263883,
-      modificado: 1579587883
-    },
-    {
-      id: 3,
-      titulo: "Arreglar error al dar de alta",
-      contenido: "El error se da en el ABM de clientes",
-      estado: "open",
-      usuario: "aceccoli",
-      fecha: 1579458283,
-      modificado: null
-    },
-    {
-      id: 4,
-      titulo: "ABM Productos",
-      contenido: "Desarrollar el ABM de productos",
-      estado: "closed",
-      usuario: "aceccoli",
-      fecha: 1579458283,
-      modificado: 1579587883
-    }
-  ];
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filtro: ''
+    };
 
-  return (
-    <div>
-      <IssueList issues={issues} />
-    </div>
-  );
+    this.onFiltroChanged = this.onFiltroChanged.bind(this);
+  }
+
+  componentDidMount() {
+    const issues = listIssues();
+    this.setState({
+      issues: issues,
+      filteredIssues: issues
+    });
+  }
+
+  onFiltroChanged(e) {
+    // const filtrados = [];
+
+    // if (this.state.issues) {
+    //   const f = this.state.filtro.toUpperCase();
+    //   for (const issue of this.state.issues) {
+    //     if (issue.titulo.toUpperCase().indexOf(f) !== -1 ||
+    //         issue.contenido.toUpperCase().indexOf(f) !== -1 ||
+    //         issue.usuario.toUpperCase().indexOf(f) !== -1) {
+    //       filtrados.push(issue);
+    //     }
+    //   }
+    // }
+
+    const f = this.state.filtro.toUpperCase();
+
+    const filtrados = (this.state.issues &&
+      this.state.issues.filter(i => (
+        i.titulo.toUpperCase().indexOf(f) !== -1 || 
+        i.contenido.toUpperCase().indexOf(f) !== -1 || 
+        i.usuario.toUpperCase().indexOf(f) !== -1))) || [];
+
+    this.setState({
+      filtro: e.target.value,
+      filteredIssues: filtrados
+    });
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="app">
+          <h3>Issues</h3>
+          <Switch>
+            <Route path="/new">
+              <NewIssue />
+            </Route>
+            <Route path="/">
+              {/* <Issues /> */}
+              <IssueFilter filtro={this.state.filtro}
+                onFiltroChanged={this.onFiltroChanged} />
+              <IssueList issues={this.state.filteredIssues} />
+            </Route>
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;
