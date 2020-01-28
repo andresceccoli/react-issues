@@ -2,12 +2,24 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { Formik } from "formik";
+import { Formik, Form as FormikForm, Field } from "formik";
+import Button from "react-bootstrap/Button";
+import { addIssue } from "./api";
+import { withRouter } from "react-router-dom";
 
 class NewIssue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onSubmit(values, { setSubmitting }) {
+    addIssue(values);
+    setSubmitting(false);
+    this.props.onNewIssue();
+    this.props.history.push('/');
   }
 
   render() {
@@ -18,19 +30,16 @@ class NewIssue extends React.Component {
     };
 
     return (
-      <Formik initialValues={initialValues}>
-        {({ values, handleChange, handleBlur }) => (
-          <Form>
+      <Formik initialValues={initialValues}
+              onSubmit={this.onSubmit}>
+        {({ isSubmitting }) => (
+          <Form as={FormikForm}>
             <Form.Group as={Row}>
               <Form.Label column sm="1">
                 Titulo
               </Form.Label>
               <Col sm="11">
-                <Form.Control
-                  name="titulo"
-                  value={values.titulo}
-                  onChange={handleChange}
-                  onBlur={handleBlur} />
+                <Form.Control name="titulo" required as={Field} />
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
@@ -38,11 +47,7 @@ class NewIssue extends React.Component {
                 Contenido
               </Form.Label>
               <Col sm="11">
-                <Form.Control
-                  name="contenido"
-                  value={values.contenido}
-                  onChange={handleChange}
-                  onBlur={handleBlur} />
+                <Form.Control name="contenido" as={Field} />
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
@@ -50,13 +55,10 @@ class NewIssue extends React.Component {
                 Usuario
               </Form.Label>
               <Col sm="11">
-                <Form.Control
-                  name="usuario"
-                  value={values.usuario}
-                  onChange={handleChange}
-                  onBlur={handleBlur} />
+                <Form.Control name="usuario" required as={Field} />
               </Col>
             </Form.Group>
+            <Button type="submit" disabled={isSubmitting}>Guardar</Button>
           </Form>
         )}
       </Formik>
@@ -64,4 +66,7 @@ class NewIssue extends React.Component {
   }
 }
 
-export default NewIssue;
+export default withRouter(NewIssue);
+
+
+// App -> withRouter(NewIssue) -> NewIssue

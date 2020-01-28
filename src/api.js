@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const sampleData = [
   {
     id: 1,
@@ -37,6 +39,29 @@ const sampleData = [
   }
 ];
 
+function load() {
+  const issuesStr = localStorage.getItem("issues");
+  if (issuesStr) {
+    return JSON.parse(issuesStr);
+  }
+  return [];
+}
+
+function save(issues) {
+  localStorage.setItem("issues", JSON.stringify(issues));
+}
+
 export function listIssues() {
-  return sampleData;
+  return load();
+}
+
+export function addIssue(issue) {
+  const issues = load();
+
+  issue.id = issues.length + 1;
+  issue.fecha = moment().unix();
+  issue.estado = "open";
+
+  issues.push(issue);
+  save(issues);
 }
