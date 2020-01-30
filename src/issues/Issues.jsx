@@ -1,9 +1,10 @@
 import React from "react";
-import { listIssues } from "./api";
+import { listIssues } from "../api";
 import IssueFilter from "./IssueFilter";
 import IssueList from "./IssueList";
 import NewIssue from "./NewIssue";
 import { Switch, Route, withRouter } from "react-router-dom";
+import IssueDetail from "./IssueDetail";
 
 class Issues extends React.Component {
   constructor(props) {
@@ -54,6 +55,9 @@ class Issues extends React.Component {
         <Switch>
           <Route path={`${this.props.match.path}/new`}>
             <NewIssue onNewIssue={this.onNewIssue.bind(this)} />
+          </Route>
+          <Route path={`${this.props.match.path}/:issueId`}>
+            <IssueDetail />
           </Route>
           <Route exact path={this.props.match.path}>
             <IssueFilter filtro={this.state.filtro}

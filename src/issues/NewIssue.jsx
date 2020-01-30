@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Formik, Form as FormikForm, Field } from "formik";
 import Button from "react-bootstrap/Button";
-import { addIssue } from "./api";
+import { addIssue } from "../api";
 import { withRouter } from "react-router-dom";
 
 class NewIssue extends React.Component {

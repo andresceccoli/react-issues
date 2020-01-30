@@ -2,7 +2,7 @@ import React from 'react';
 
 import './App.css';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import Issues from './Issues';
+import Issues from './issues/Issues';
 
 class App extends React.Component {
   render() {

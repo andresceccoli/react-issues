@@ -65,3 +65,10 @@ export function addIssue(issue) {
   issues.push(issue);
   save(issues);
 }
+
+export function get(id) {
+  const issues = load();
+  const filtered = issues.filter(i => i.id === id);
+  if (filtered.length > 0) return filtered[0];
+  return null;
+}
