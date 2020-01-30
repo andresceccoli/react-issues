@@ -3,10 +3,9 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 function IssueFilter(props) {
-
   return (
     <Form>
       <Form.Group as={Row}>
@@ -18,7 +17,7 @@ function IssueFilter(props) {
             value={props.filtro} onChange={props.onFiltroChanged} />
         </Col>
         <Col sm="2">
-          <Link to="/new">
+          <Link to={`${props.match.url}/new`}>
             <Button variant="success">Nuevo Issue</Button>
           </Link>
         </Col>
@@ -28,4 +27,4 @@ function IssueFilter(props) {
 
 }
 
-export default IssueFilter;
+export default withRouter(IssueFilter);

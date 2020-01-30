@@ -2,6 +2,8 @@ import React from "react";
 import { listIssues } from "./api";
 import IssueFilter from "./IssueFilter";
 import IssueList from "./IssueList";
+import NewIssue from "./NewIssue";
+import { Switch, Route, withRouter } from "react-router-dom";
 
 class Issues extends React.Component {
   constructor(props) {
@@ -12,35 +14,20 @@ class Issues extends React.Component {
 
     this.onFiltroChanged = this.onFiltroChanged.bind(this);
   }
-  
-  componentDidMount() {
+
+  loadIssues() {
+    const issues = listIssues();
     this.setState({
-      filteredIssues: this.props.issues
+      issues: issues,
+      filteredIssues: issues
     });
   }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.issues !== this.props.issues) {
-      this.setState({
-        filteredIssues: this.props.issues
-      });
-    }
+  
+  componentDidMount() {
+    this.loadIssues();
   }
 
   onFiltroChanged(e) {
-    // const filtrados = [];
-
-    // if (this.state.issues) {
-    //   const f = this.state.filtro.toUpperCase();
-    //   for (const issue of this.state.issues) {
-    //     if (issue.titulo.toUpperCase().indexOf(f) !== -1 ||
-    //         issue.contenido.toUpperCase().indexOf(f) !== -1 ||
-    //         issue.usuario.toUpperCase().indexOf(f) !== -1) {
-    //       filtrados.push(issue);
-    //     }
-    //   }
-    // }
-
     const f = this.state.filtro.toUpperCase();
 
     const filtrados = (this.state.issues &&
@@ -55,15 +42,28 @@ class Issues extends React.Component {
     });
   }
 
+  onNewIssue() {
+    this.loadIssues();
+  }
+
   render() {
+    console.log('match', this.props.match);
     return (
       <React.Fragment>
-        <IssueFilter filtro={this.state.filtro}
-          onFiltroChanged={this.onFiltroChanged} />
-        <IssueList issues={this.state.filteredIssues} />
+        <h3>Issues</h3>
+        <Switch>
+          <Route path={`${this.props.match.path}/new`}>
+            <NewIssue onNewIssue={this.onNewIssue.bind(this)} />
+          </Route>
+          <Route exact path={this.props.match.path}>
+            <IssueFilter filtro={this.state.filtro}
+              onFiltroChanged={this.onFiltroChanged} />
+            <IssueList issues={this.state.filteredIssues} />
+          </Route>
+        </Switch>
       </React.Fragment>
     );
   }
 }
 
-export default Issues;
+export default withRouter(Issues);

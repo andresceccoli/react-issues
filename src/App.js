@@ -1,46 +1,19 @@
 import React from 'react';
 
 import './App.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import NewIssue from './NewIssue';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Issues from './Issues';
-import { listIssues } from './api';
 
 class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  loadList() {
-    const issues = listIssues();
-    this.setState({
-      issues: issues
-    });
-  }
-
-  componentDidMount() {
-    this.loadList();
-  }
-
-  onNewIssue() {
-    console.log('new Issue agregado');
-    this.loadList();
-  }
-
   render() {
     return (
       <BrowserRouter>
         <div className="app">
-          <h3>Issues</h3>
           <Switch>
-            <Route path="/new">
-              <NewIssue onNewIssue={this.onNewIssue.bind(this)} />
+            <Route path="/issues">
+              <Issues />
             </Route>
-            <Route path="/">
-              <Issues issues={this.state.issues || []} />
-            </Route>
+            <Redirect path="/" to="/issues" />
           </Switch>
         </div>
       </BrowserRouter>
@@ -58,3 +31,12 @@ export default App;
 //               -> IssueFilter
 //               -> IssueList
 //               -> IssueDetail
+//     -> Usuarios -> NewUser
+//                 -> UserList
+//     -> Milestones -> MilestoneList
+//                   -> NewMilestone
+
+//   /                Home
+//   /issues/567   
+//   /users  
+//   /milestones
