@@ -12,11 +12,11 @@ function IssueFilter(props) {
         <Form.Label column sm="1">
           Filtro
         </Form.Label>
-        <Col sm="9">
+        <Col sm="8" lg="9">
           <Form.Control name="filtro"
             value={props.filtro} onChange={props.onFiltroChanged} />
         </Col>
-        <Col sm="2">
+        <Col sm="3" lg="2">
           <Link to={`${props.match.url}/new`}>
             <Button variant="success">Nuevo Issue</Button>
           </Link>

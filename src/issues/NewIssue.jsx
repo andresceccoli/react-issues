@@ -35,26 +35,26 @@ class NewIssue extends React.Component {
         {({ isSubmitting }) => (
           <Form as={FormikForm}>
             <Form.Group as={Row}>
-              <Form.Label column sm="1">
+              <Form.Label column sm="2" lg="1">
                 Titulo
               </Form.Label>
-              <Col sm="11">
+              <Col sm="10" lg="11">
                 <Form.Control name="titulo" required as={Field} />
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
-              <Form.Label column sm="1">
+              <Form.Label column sm="2" lg="1">
                 Contenido
               </Form.Label>
-              <Col sm="11">
-                <Form.Control name="contenido" as={Field} />
+              <Col sm="10" lg="11">
+                <Form.Control name="contenido" component="textarea" rows="10" as={Field} />
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
-              <Form.Label column sm="1">
+              <Form.Label column sm="2" lg="1">
                 Usuario
               </Form.Label>
-              <Col sm="11">
+              <Col sm="10" lg="11">
                 <Form.Control name="usuario" required as={Field} />
               </Col>
             </Form.Group>
