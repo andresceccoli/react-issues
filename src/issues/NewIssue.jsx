@@ -47,7 +47,7 @@ class NewIssue extends React.Component {
                 Contenido
               </Form.Label>
               <Col sm="11">
-                <Form.Control name="contenido" as={Field} />
+                <Form.Control name="contenido" as={Field} component="textarea" rows={10} />
               </Col>
             </Form.Group>
             <Form.Group as={Row}>

@@ -2,6 +2,15 @@
   font-weight: bold;
 }
 
+.issue-list h6 a {
+  color: black;
+}
+
+.issue-list h6 a:hover {
+  text-decoration: none;
+  color: #554499;
+}
+
 .issue-subheader {
   font-size: 75%;
   opacity: 65%;

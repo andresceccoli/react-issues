@@ -1,0 +1,27 @@
+.issue-header {
+  margin-top: 32px;
+}
+
+.issue-id {
+  opacity: 0.6;
+  margin-left: 8px;
+}
+
+.issue-info {
+  font-size: 90%;
+  margin-bottom: 16px;
+}
+
+.issue-date {
+  opacity: 0.6;
+  margin-left: 4px;
+}
+
+.issue-user {
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.issue-contenido {
+  margin-bottom: 32px;
+}

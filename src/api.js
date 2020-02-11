@@ -72,3 +72,25 @@ export function get(id) {
   if (filtered.length > 0) return filtered[0];
   return null;
 }
+
+export function close(id) {
+  const issues = load();
+  const filtered = issues.filter(i => i.id === id);
+  if (filtered.length > 0) {
+    const issue = filtered[0];
+    issue.estado = "closed";
+    issue.modificado = moment().unix();
+    save(issues);
+  }
+}
+
+export function reopen(id) {
+  const issues = load();
+  const filtered = issues.filter(i => i.id === id);
+  if (filtered.length > 0) {
+    const issue = filtered[0];
+    issue.estado = "open";
+    issue.modificado = moment().unix();
+    save(issues);
+  }
+}
